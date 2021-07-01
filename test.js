@@ -47,7 +47,7 @@ function account() {
             });
 
             // 登陆成功
-            bot.once("system.online", loop);
+            //bot.once("system.online", loop);
 
             // 下线
             bot.once("system.offline", (data)=>{
@@ -128,5 +128,13 @@ function loop() {
 
 if (!bot) {
     console.log("欢迎来到调试台！");
-    account();
+    var num = process.argv[2];
+    var pw = process.argv[3];
+    console.log(num);
+    console.log(pw);
+    bot = oicq.createClient(num, {
+        log_level: "debug", ignore_self: false
+    });
+    const password_md5 = crypto.createHash("md5").update(pw).digest();
+    bot.login(password_md5);
 }
